@@ -183,4 +183,34 @@ public class HamroBazar_Page {
     public void clickingTheFilterButton() {
         filterButton.click();
     }
+
+
+    public static void scrollElementToTop(WebDriver driver, WebElement element) {
+        try {
+            // Use JavascriptExecutor to scroll the element to the top
+            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({ behavior: 'smooth', block: 'start' });", element);
+        } catch (Exception e) {
+            // Handle exceptions if needed
+            e.printStackTrace();
+        }
+    }
+
+    public static boolean isElementPresent(WebDriver driver, By locator) {
+        try {
+            // Attempt to find the element
+            WebElement element = driver.findElement(locator);
+            // Check if the element is displayed (visible) on the page
+            return element.isDisplayed();
+        } catch (NoSuchElementException e) {
+            // Element not found, return false
+            return false;
+        }
+    }
+
+    public static void displayRow(String[] rowData) {
+        for (String data : rowData) {
+            System.out.print(String.format("%-20s", data));
+        }
+        System.out.println();
+    }
 }

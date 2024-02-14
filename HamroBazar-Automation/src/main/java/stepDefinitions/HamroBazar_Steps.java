@@ -12,7 +12,6 @@ import io.cucumber.java.en.When;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.interactions.Actions;
 import pages.HamroBazar_Page;
 import pages.common.Common_Functions;
 
@@ -110,7 +109,7 @@ public class HamroBazar_Steps {
             writer.writeNext(new String[]{"Title of the product", "Description of the product", "Price of the product", "Condition of the product", "Ad Posted Date", "Name of the seller"});
             for (int i = 0; i < numberOfItemsToStore; i++) {
 
-                if (isElementPresent(driver, By.xpath(hamroBazarPage.productByIndex(i)))) {
+                if (commonFunctions.isElementPresent(driver, By.xpath(hamroBazarPage.productByIndex(i)))) {
                     System.out.println("Element with xpath '" + hamroBazarPage.productByIndex(i) + "' exists on the page.");
 
                 } else {
@@ -119,7 +118,7 @@ public class HamroBazar_Steps {
                     System.out.println(text);
                     ;
                     System.out.println("Element with xpath '" + hamroBazarPage.productByIndex(i) + "' does not exist on the page.");
-                    scrollElementToTop(driver, element);
+                    commonFunctions.scrollElementToTop(driver, element);
                     Thread.sleep(1000);
                 }
 
@@ -148,12 +147,12 @@ public class HamroBazar_Steps {
 
             if (headers != null) {
                 // Display headers
-                displayRow(headers);
+                commonFunctions.displayRow(headers);
 
                 String[] nextLine;
                 while ((nextLine = reader.readNext()) != null) {
                     // Display data rows
-                    displayRow(nextLine);
+                    commonFunctions.displayRow(nextLine);
                 }
             } else {
                 System.out.println("No data found in the CSV file.");
@@ -164,36 +163,6 @@ public class HamroBazar_Steps {
         } catch (CsvValidationException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private static void scrollElementToTop(WebDriver driver, WebElement element) {
-        try {
-            // Use JavascriptExecutor to scroll the element to the top
-            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({ behavior: 'smooth', block: 'start' });", element);
-        } catch (Exception e) {
-            // Handle exceptions if needed
-            e.printStackTrace();
-        }
-    }
-
-
-    private static boolean isElementPresent(WebDriver driver, By locator) {
-        try {
-            // Attempt to find the element
-            WebElement element = driver.findElement(locator);
-            // Check if the element is displayed (visible) on the page
-            return element.isDisplayed();
-        } catch (NoSuchElementException e) {
-            // Element not found, return false
-            return false;
-        }
-    }
-
-    private static void displayRow(String[] rowData) {
-        for (String data : rowData) {
-            System.out.print(String.format("%-20s", data));
-        }
-        System.out.println();
     }
 
     @After

@@ -11,5 +11,4 @@ Feature: HamroBazar-Automation
     Then Sorting the result by Low to High Price
     And Saving the details of the top fifty items that appears after applying the filter on the csv file named Search_Result.csv
     Then Displaying the data of the Search_Result.csv file in tabular format
-#  with the columns "Title of the product", "Description of the product", "Price of the product", "Condition of the product", "Ad posted date" and "The name of the seller"
 
